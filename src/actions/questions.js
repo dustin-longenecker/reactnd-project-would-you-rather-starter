@@ -12,16 +12,18 @@ function addQuestion (question) {
   }
 }
 
-export function handleAddQuestion (text, replyingTo) {
+export function handleAddQuestion (optionOne, optionTwo) {
   return (dispatch, getState) => {
     const { authedUser } = getState()
-
     dispatch(showLoading())
 
     return saveQuestion({
-      text,
-      author: authedUser,
-      replyingTo
+      optionOne: {
+        votes: [],
+        text: "hello"
+        },
+      optionTwo: optionTwo,
+      author: authedUser
     })
       .then((question) => dispatch(addQuestion(question)))
       .then(() => dispatch(hideLoading()))
@@ -29,6 +31,7 @@ export function handleAddQuestion (text, replyingTo) {
 }
 
 export function receiveQuestions (questions) {
+  
   return {
     type: RECEIVE_QUESTIONS,
     questions,

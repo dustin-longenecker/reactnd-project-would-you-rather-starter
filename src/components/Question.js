@@ -23,15 +23,16 @@ class Question extends Component {
     e.preventDefault()
     this.props.history.push(`/question/${id}`)
   }
+  viewPoll = (e, id) => {
+    
+  }
   render() {
     const { question } = this.props
-
     if (question === null) {
-      return <p>This Question doesn't existd</p>
+      return <p>This Question doesn't exist</p>
     }
-
     const {
-      name, avatar, timestamp, text, hasLiked, likes, replies, id, parent
+      name, avatar, timestamp, optionOne, optionTwo, id, parent
     } = question
 
     return (
@@ -45,22 +46,19 @@ class Question extends Component {
           <div>
             <span>{name}</span>
             <div>{formatDate(timestamp)}</div>
-            {parent && (
-              <button className='replying-to' onClick={(e) => this.toParent(e, parent.id)}>
-                Replying to @{parent.author}
-              </button>
-            )}
-            <p>{text}</p>
+            
+            <p></p>
           </div>
-          <div className='question-icons'>
-            <TiArrowBackOutline className='question-icon' />
-            <span>{replies !== 0 && replies}</span>
-            <button className='heart-button' onClick={this.handleLike}>
-              {hasLiked === true
-                ? <TiHeartFullOutline color='#e0245e' className='question-icon' />
-                : <TiHeartOutline className='question-icon'/>}
-            </button>
-            <span>{likes !== 0 && likes}</span>
+          <div></div>
+          <div className='question-options'>
+
+           <form>
+              <input type="radio" name="option-one"  value="optionOne"  /> 
+              {optionOne.text}
+              <input type="radio" name="option-two"  value="optionTwo"  /> 
+              {optionTwo.text}
+          </form>
+            <div><button >View Poll</button></div>
           </div>
         </div>
       </Link>
@@ -70,8 +68,7 @@ class Question extends Component {
 
 function mapStateToProps ({authedUser, users, questions}, { id }) {
   const question = questions[id]
-  const parentQuestion = question ? questions[question.replyingTo] : null
-
+  const parentQuestion = question ? questions[question.isAnswered] : null
   return {
     authedUser,
     question: question

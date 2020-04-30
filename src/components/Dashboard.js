@@ -4,6 +4,8 @@ import Question from './Question'
 
 class Dashboard extends Component {
   render() {
+        console.log(this.props)
+
     return (
       <div>
         <h3 className='center'>Your Timeline</h3>
@@ -11,6 +13,7 @@ class Dashboard extends Component {
           {this.props.questionIds.map((id) => (
             <li key={id}>
               <Question id={id}/>
+              {id}
             </li>
           ))}
         </ul>

@@ -5,58 +5,71 @@ import { Redirect } from 'react-router-dom'
 
 class NewQuestion extends Component {
   state = {
-    text: '',
+    optionOne: '',
+    optionTwo: '',
     toHome: false,
   }
-  handleChange = (e) => {
-    const text = e.target.value
+  handleChangeOptionOne = (e) => {
+    const optionOne = e.target.value
+    console.log(e.target)
 
     this.setState(() => ({
-      text
+      optionOne,
+    }))
+  }
+   handleChangeOptionTwo = (e) => {
+    const optionTwo = e.target.value
+    console.log(e.target)
+
+    this.setState(() => ({
+      optionTwo,
     }))
   }
   handleSubmit = (e) => {
     e.preventDefault()
 
-    const { text } = this.state
+    const { optionOne, optionTwo } = this.state
     const { dispatch, id } = this.props
 
-    dispatch(handleAddQuestion(text, id))
+    dispatch(handleAddQuestion(optionOne, optionTwo))
 
     this.setState(() => ({
-      text: '',
+      optionOne: '',
+      optionTwo: '',
       toHome: id ? false : true,
     }))
   }
   render() {
-    const { text, toHome } = this.state
+    const { optionOne, optionTwo, toHome } = this.state
 
     if (toHome === true) {
       return <Redirect to='/' />
     }
 
-    const questionLeft = 280 - text.length
 
     return (
       <div>
         <h3 className='center'>Compose new Question</h3>
         <form className='new-question' onSubmit={this.handleSubmit}>
-          <textarea
-            placeholder="What's happening?"
-            value={text}
-            onChange={this.handleChange}
-            className='textarea'
+        <h4>Complete a new question: </h4>
+          <input
+            placeholder="Option 1?"
+            value={optionOne}
+            onChange={this.handleChangeOptionOne}
             maxLength={280}
           />
-          {questionLeft <= 100 && (
-            <div className='question-length'>
-              {questionLeft}
-            </div>
-          )}
+          <span>OR . . . </span>
+          <input
+            placeholder="Option 2?"
+            value={optionTwo}
+            onChange={this.handleChangeOptionTwo}
+            maxLength={280}
+          />
+          
           <button
             className='btn'
             type='submit'
-            disabled={text === ''}>
+            >
               Submit
           </button>
         </form>

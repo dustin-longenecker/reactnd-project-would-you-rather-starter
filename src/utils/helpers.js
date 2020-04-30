@@ -1,3 +1,4 @@
+
 export function formatDate (timestamp) {
   const d = new Date(timestamp)
   const time = d.toLocaleTimeString('en-US')
@@ -5,21 +6,16 @@ export function formatDate (timestamp) {
 }
 
 export function formatQuestion (question, author, authedUser, parentQuestion) {
-  const { id, likes, replies, text, timestamp } = question
+  const { id, optionOne, optionTwo, timestamp } = question
   const { name, avatarURL } = author
 
   return {
     name,
     id,
+    avatarURL,
     timestamp,
-    text,
     avatar: avatarURL,
-    likes: likes.length,
-    replies: replies.length,
-    hasLiked: likes.includes(authedUser),
-    parent: !parentQuestion ? null : {
-      author: parentQuestion.author,
-      id: parentQuestion.id,
-    }
+    optionOne,
+    optionTwo
   }
 }
