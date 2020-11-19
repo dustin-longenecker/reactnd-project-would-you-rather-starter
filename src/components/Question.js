@@ -1,9 +1,6 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { formatQuestion, formatDate } from '../utils/_DATA'
-import TiArrowBackOutline from 'react-icons/lib/ti/arrow-back-outline'
-import TiHeartOutline from 'react-icons/lib/ti/heart-outline'
-import TiHeartFullOutline from 'react-icons/lib/ti/heart-full-outline'
+import {  formatDate } from '../utils/_DATA'
 import { handleToggleQuestion } from '../actions/questions'
 import { Link, withRouter } from 'react-router-dom'
 
@@ -19,28 +16,19 @@ class Question extends Component {
       authedUser
     }))
   }
-  toParent = (e, id) => {
-    e.preventDefault()
-    this.props.history.push(`/question/${id}`)
-  }
-  viewPoll = (e, id) => {
-    
-  }
-  filterAnswered = (questions) => {
-    return questions.filter((question) =>{
-      question.isAnswered === true
-    })
+ 
+  
+  
 
-  }
   render() {
-    const { question } = this.props
+    const { question, avatarURL } = this.props
     if (question === null) {
       return <p>This Question doesn't exist</p>
     }
     const {
-      author, avatarURL, timestamp, optionOne, optionTwo, id
+      author, timestamp, optionOne, optionTwo, id
     } = question
-      console.log(this.props)
+    
       
     return (
       <Link to={`/question/${id}`} className='question'>
@@ -55,7 +43,7 @@ class Question extends Component {
             <div>{formatDate(timestamp)}</div>
             <p></p>
           </div>
-          <div>{question.id}</div>
+          <div>{id}</div>
           <div className='question-options'>
            <form>
               <input type="radio" name="option-one"  value="optionOne"  /> 
@@ -72,10 +60,17 @@ class Question extends Component {
 
 function mapStateToProps ({authedUser, users, questions}, { id }) {
   const question = questions[id]
+  const avatarURL = users[question.author].avatarURL
+  const questionsArr = Object.keys(questions);
+  
   return {
     authedUser,
+    avatarURL,
+    replies: !questionsArr[id]
+      ? []
+      : questionsArr[id].replies.sort((a,b,) => questionsArr[b].timestamp - questionsArr[a].timestamp),
     question: question
-      ? formatQuestion(question.optionOne.text, question.optionTwo.text , users[question.author])
+      ? question
       : null
   }
 }

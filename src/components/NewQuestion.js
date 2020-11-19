@@ -29,10 +29,6 @@ class NewQuestion extends Component {
     e.preventDefault()
 
     const { optionOneText, optionTwoText } = this.state
-    const question = {
-        optionOneText,
-        optionTwoText,
-    }
     const { dispatch, id } = this.props
 
     dispatch(handleAddQuestion(optionOneText, optionTwoText))

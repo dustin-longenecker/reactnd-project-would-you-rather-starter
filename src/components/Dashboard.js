@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Question from './Question'
-import { NavLink } from 'react-router-dom'
-import {getInitialData} from '../utils/_DATA'
 
 
 class Dashboard extends Component {
-  
+      
 
 
   render() {
