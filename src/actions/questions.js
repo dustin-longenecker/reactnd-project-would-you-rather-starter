@@ -1,4 +1,4 @@
-import { saveLikeToggle, saveQuestion } from '../utils/api'
+import { _saveQuestion } from '../utils/_DATA'
 import { showLoading, hideLoading } from 'react-redux-loading'
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
@@ -12,17 +12,14 @@ function addQuestion (question) {
   }
 }
 
-export function handleAddQuestion (optionOne, optionTwo) {
+export function handleAddQuestion (optionOneText, optionTwoText) {
   return (dispatch, getState) => {
     const { authedUser } = getState()
     dispatch(showLoading())
-
-    return saveQuestion({
-      optionOne: {
-        votes: [],
-        text: "hello"
-        },
-      optionTwo: optionTwo,
+    console.log("option1text", optionOneText)
+    return _saveQuestion({
+      optionOneText,
+      optionTwoText,
       author: authedUser
     })
       .then((question) => dispatch(addQuestion(question)))
@@ -51,11 +48,6 @@ export function handleToggleQuestion (info) {
   return (dispatch) => {
     dispatch(toggleQuestion(info))
 
-    return saveLikeToggle(info)
-      .catch((e) => {
-        console.warn('Error in handleToggleQuestion: ', e)
-        dispatch(toggleQuestion(info))
-        alert('The was an error liking the question. Try again.')
-      })
+    
   }
 }

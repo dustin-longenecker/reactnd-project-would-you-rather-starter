@@ -25,6 +25,7 @@ class App extends Component {
                   <Route path='/' exact component={Dashboard} />
                   <Route path='/question/:id' component={QuestionPage} />
                   <Route path='/new' component={NewQuestion} />
+                  <Route path='/leaderboard' component ={Dashboard}/>
                 </div>}
           </div>
         </Fragment>

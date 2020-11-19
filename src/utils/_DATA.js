@@ -114,8 +114,22 @@ let questions = {
     }
   },
 }
+export function getInitialData (){
+  return Promise.all([
+    _getUsers(),
+    _getQuestions(),
+  ]).then(([users, questions]) => ({
+    users,
+    questions,
+  }))
+}
 
-function generateUID () {
+export function formatDate (timestamp) {
+  const d = new Date(timestamp)
+  const time = d.toLocaleTimeString('en-US')
+  return time.substr(0, 5) + time.slice(-2) + ' | ' + d.toLocaleDateString()
+}
+export function generateUID () {
   return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 }
 
@@ -131,7 +145,7 @@ export function _getQuestions () {
   })
 }
 
-function formatQuestion ({ optionOneText, optionTwoText, author }) {
+export function formatQuestion ({ optionOneText, optionTwoText, author }) {
   return {
     id: generateUID(),
     timestamp: Date.now(),
@@ -147,28 +161,11 @@ function formatQuestion ({ optionOneText, optionTwoText, author }) {
   }
 }
 
-export function _saveLikeToggle ({ id, hasLiked, authedUser }) {
-  return new Promise((res, rej) => {
-    setTimeout(() => {
-      questions = {
-        ...questions,
-        [id]: {
-          ...questions[id],
-          likes: hasLiked === true
-            ? questions[id].likes.filter((uid) => uid !== authedUser)
-            : questions[id].likes.concat([authedUser])
-        }
-      }
-
-      res()
-    }, 500)
-  })
-}
 export function _saveQuestion (question) {
   return new Promise((res, rej) => {
     const authedUser = question.author;
     const formattedQuestion = formatQuestion(question);
-    console.log("FORMAT", formattedQuestion)
+
     setTimeout(() => {
       questions = {
         ...questions,

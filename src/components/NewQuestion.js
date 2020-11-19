@@ -5,42 +5,46 @@ import { Redirect } from 'react-router-dom'
 
 class NewQuestion extends Component {
   state = {
-    optionOne: '',
-    optionTwo: '',
+    optionOneText: '',
+    optionTwoText: '',
     toHome: false,
   }
   handleChangeOptionOne = (e) => {
-    const optionOne = e.target.value
+    const optionOneText = e.target.value
     console.log(e.target)
 
     this.setState(() => ({
-      optionOne,
+      optionOneText,
     }))
   }
    handleChangeOptionTwo = (e) => {
-    const optionTwo = e.target.value
+    const optionTwoText = e.target.value
     console.log(e.target)
 
     this.setState(() => ({
-      optionTwo,
+      optionTwoText,
     }))
   }
   handleSubmit = (e) => {
     e.preventDefault()
 
-    const { optionOne, optionTwo } = this.state
+    const { optionOneText, optionTwoText } = this.state
+    const question = {
+        optionOneText,
+        optionTwoText,
+    }
     const { dispatch, id } = this.props
 
-    dispatch(handleAddQuestion(optionOne, optionTwo))
-
+    dispatch(handleAddQuestion(optionOneText, optionTwoText))
+    console.log("opt101", optionOneText)
     this.setState(() => ({
-      optionOne: '',
-      optionTwo: '',
+      optionOneText: '',
+      optionTwoText: '',
       toHome: id ? false : true,
     }))
   }
   render() {
-    const { optionOne, optionTwo, toHome } = this.state
+    const { optionOneText, optionTwoText, toHome } = this.state
 
     if (toHome === true) {
       return <Redirect to='/' />
@@ -54,14 +58,14 @@ class NewQuestion extends Component {
         <h4>Complete a new question: </h4>
           <input
             placeholder="Option 1?"
-            value={optionOne}
+            value={optionOneText}
             onChange={this.handleChangeOptionOne}
             maxLength={280}
           />
           <span>OR . . . </span>
           <input
             placeholder="Option 2?"
-            value={optionTwo}
+            value={optionTwoText}
             onChange={this.handleChangeOptionTwo}
             maxLength={280}
           />

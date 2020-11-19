@@ -1,19 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Question from './Question'
+import { NavLink } from 'react-router-dom'
+import {getInitialData} from '../utils/_DATA'
+
 
 class Dashboard extends Component {
-  render() {
-        console.log(this.props)
+  
 
+
+  render() {
     return (
       <div>
         <h3 className='center'>Your Timeline</h3>
         <ul className='dashboard-list'>
+        
           {this.props.questionIds.map((id) => (
             <li key={id}>
               <Question id={id}/>
-              {id}
             </li>
           ))}
         </ul>

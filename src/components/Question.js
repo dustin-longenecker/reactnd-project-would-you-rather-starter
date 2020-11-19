@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { formatQuestion, formatDate } from '../utils/helpers'
+import { formatQuestion, formatDate } from '../utils/_DATA'
 import TiArrowBackOutline from 'react-icons/lib/ti/arrow-back-outline'
 import TiHeartOutline from 'react-icons/lib/ti/heart-outline'
 import TiHeartFullOutline from 'react-icons/lib/ti/heart-full-outline'
@@ -26,39 +26,43 @@ class Question extends Component {
   viewPoll = (e, id) => {
     
   }
+  filterAnswered = (questions) => {
+    return questions.filter((question) =>{
+      question.isAnswered === true
+    })
+
+  }
   render() {
     const { question } = this.props
     if (question === null) {
       return <p>This Question doesn't exist</p>
     }
     const {
-      name, avatar, timestamp, optionOne, optionTwo, id, parent
+      author, avatarURL, timestamp, optionOne, optionTwo, id
     } = question
-
+      console.log(this.props)
+      
     return (
       <Link to={`/question/${id}`} className='question'>
         <img
-          src={avatar}
-          alt={`Avatar of ${name}`}
+          src={avatarURL}
+          alt={`Avatar of ${author}`}
           className='avatar'
         />
         <div className='question-info'>
           <div>
-            <span>{name}</span>
+            <span>{author}</span>
             <div>{formatDate(timestamp)}</div>
-            
             <p></p>
           </div>
-          <div></div>
+          <div>{question.id}</div>
           <div className='question-options'>
-
            <form>
               <input type="radio" name="option-one"  value="optionOne"  /> 
               {optionOne.text}
               <input type="radio" name="option-two"  value="optionTwo"  /> 
               {optionTwo.text}
           </form>
-            <div><button >View Poll</button></div>
           </div>
         </div>
       </Link>
@@ -68,11 +72,10 @@ class Question extends Component {
 
 function mapStateToProps ({authedUser, users, questions}, { id }) {
   const question = questions[id]
-  const parentQuestion = question ? questions[question.isAnswered] : null
   return {
     authedUser,
     question: question
-      ? formatQuestion(question, users[question.author], authedUser, parentQuestion)
+      ? formatQuestion(question.optionOne.text, question.optionTwo.text , users[question.author])
       : null
   }
 }
