@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import User from './User'
 
+import { handleInitialData } from '../actions/shared'
 
 class Leaderboard extends Component {
-      
+       componentDidMount() {
+    this.props.dispatch(handleInitialData())
+  }
 
 
   render() {
@@ -27,6 +30,7 @@ class Leaderboard extends Component {
 function mapStateToProps ({ users }) {
   return {
     usersIds: Object.keys(users)
+      .sort((a,b) => (users[b].questions.length + Object.keys(users[b].answers).length) - (users[a].questions.length + Object.keys(users[a].answers).length))
   }
 }
 

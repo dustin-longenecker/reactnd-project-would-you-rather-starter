@@ -8,14 +8,21 @@ class User extends Component {
   
 
   render() {
-    const { user, answers } = this.props
-   
+    const { user } = this.props
+    if( user === null) {
+        return <p>This User doesnt exist.</p>
+    }
+
+    const {
+         name, answers, questions,  avatarURL
+    } = user
     console.log(user)
     
       
     return (
       <Link to={``} className='question'>
         <img
+          src={avatarURL}
           className='avatar'
         />
         <div className='question-info'>
@@ -25,12 +32,12 @@ class User extends Component {
           </div>
           <div>{}</div>
           <div className='user-scores'>
-            <div>Created Questions: {user.questions.length}</div>
-            <div>Answered Questions: {answers.length}</div>
+            <div>Created Questions: {questions.length}</div>
+            <div>Answered Questions: {Object.keys(answers).length}</div>
 
           </div>
           <div className='total-score'>
-            Total Score: {user.questions.length + answers.length}
+            Total Score: {questions.length + Object.keys(answers).length}
           </div>
         </div>
       </Link>
@@ -38,14 +45,11 @@ class User extends Component {
   }
 }
 
-function mapStateToProps ({authedUser, users, questions}, { id }) {
+function mapStateToProps ({authedUser, users}, { id }) {
   const user = users[id]
-  const avatarURL = users[user.id].avatarURL
-  const answers = Object.keys(user.answers)
   return {
     authedUser,
-    avatarURL,
-    answers,
+    users,
     user: user
       ? user
       : null
