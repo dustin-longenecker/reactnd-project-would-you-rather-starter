@@ -1,15 +1,23 @@
-import React from 'react'
+import React, {Component} from 'react'
+import { connect } from 'react-redux'
+
 import { NavLink } from 'react-router-dom'
+
+import Login from './Login'
 import {removeAuthedUser} from '../actions/authedUser'
 
-export default function Nav (authedUser) {
-  console.log(authedUser)
-  function onLogout () {
+class Nav extends Component  {
+  onLogout = () => {
     const {dispatch} = this.props
     dispatch(removeAuthedUser())
   }
+  render() {
+    const { authedUser } = this.props
   return (
+    <div>
+    { authedUser !== null ?
     <nav className='nav'>
+
       <ul>
         <li>
           <NavLink to='/' exact activeClassName='active'>
@@ -27,19 +35,30 @@ export default function Nav (authedUser) {
           </NavLink>
         </li>
         <li>
-          { authedUser === null ?
-          <NavLink to='/login' activeClassName='active'>
-            Login
-          </NavLink>
-          :
+
+
           <div>
-          <NavLink to='/login' onClick={onLogout} activeClassName='active'>
+          <button onClick={this.onLogout} activeClassName='active'>
             Logout
-          </NavLink>
+          </button>
+          {authedUser}
           </div>
-        }
         </li>
+
       </ul>
+
     </nav>
+    :
+    <Login />
+    }
+    </div>
   )
+  }
 }
+function mapStateToProps ({ authedUser }) {
+  return {
+    
+    authedUser
+  }
+}
+export default connect(mapStateToProps)(Nav)

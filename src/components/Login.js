@@ -6,7 +6,7 @@ import {setAuthedUser} from '../actions/authedUser.js'
 
 class Login extends Component {
   state = {
-    selectedOption: ''
+    selectedOption: null
   }
 
   handleSubmit = (e) =>{
@@ -27,7 +27,7 @@ class Login extends Component {
     return (
       <div>
         <h3 className='login'>Login</h3>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={(e) => this.handleSubmit(e)}>
             <select
                 defaultValue='none'
                 onChange={(e) => this.handleChange(e)}
@@ -37,7 +37,7 @@ class Login extends Component {
                 <option value='tylermcginnis'>Tyler McGinnis</option>
                 <option value='johndoe'>John Doe</option>
             </select>
-            <button type='submit' redirect="/">Login</button>
+            <button type='submit'>Login</button>
         </form>
       </div>
     )

@@ -17,14 +17,12 @@ class App extends Component {
     this.props.dispatch(handleInitialData())
   }
   render() {
-    const {authedUser} = this.props
-    console.log(authedUser)
     return (
       <Router>
         <Fragment>
           <LoadingBar />
           <div className='container'>
-            <Nav authedUser={authedUser} />
+            <Nav />
             {this.props.loading === true
               ? null
               : <div>
