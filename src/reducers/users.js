@@ -15,14 +15,14 @@ export default function users (state = {}, action) {
               ...state[action.authedUser],
               questions: state[action.authedUser].questions.concat([action.qid]),
           },
-      };
+      }
       case SAVE_USER_ANSWER :
           return {
                 ...state,
-                [action.auth]: {
-                    ...state[action.auth],
+                [action.authedUser]: {
+                    ...state[action.authedUser],
                     answers: {
-                        ...state[action.auth].answers,
+                        ...state[action.authedUser].answers,
                         [action.qid]: action.option,
                     },
                 },

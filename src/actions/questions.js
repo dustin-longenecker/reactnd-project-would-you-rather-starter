@@ -64,7 +64,7 @@ export function handleAnswerQuestion(qid, answer) {
           console.log(qid, authedUser, answer)
 
                 dispatch(answerQuestion({ qid, authedUser, answer }))
-                dispatch(saveUserAnswer(authedUser, qid, answer))
+                dispatch(saveUserAnswer(qid, authedUser, answer))
             })
             .then(() => dispatch(hideLoading()))
 
