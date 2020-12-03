@@ -1,8 +1,9 @@
-import { _saveQuestion } from '../utils/_DATA'
+import { _saveQuestion, _saveQuestionAnswer } from '../utils/_DATA'
 import { showLoading, hideLoading } from 'react-redux-loading'
+import { addUserQuestion, saveUserAnswer } from './users'
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
-export const TOGGLE_QUESTION = 'TOGGLE_QUESTION'
+export const ANSWER_QUESTION = 'ANSWER_QUESTION';
 export const ADD_QUESTION = 'ADD_QUESTION'
 
 function addQuestion (question) {
@@ -16,13 +17,15 @@ export function handleAddQuestion (optionOneText, optionTwoText) {
   return (dispatch, getState) => {
     const { authedUser } = getState()
     dispatch(showLoading())
-    console.log("option1text", optionOneText)
     return _saveQuestion({
       optionOneText,
       optionTwoText,
       author: authedUser
     })
-      .then((question) => dispatch(addQuestion(question)))
+      .then((question) => {
+        dispatch(addQuestion(question))
+        dispatch(addUserQuestion(authedUser, question.id))
+      })
       .then(() => dispatch(hideLoading()))
   }
 }
@@ -35,19 +38,32 @@ export function receiveQuestions (questions) {
   }
 }
 
-function toggleQuestion ({ id, authedUser, hasLiked }) {
+function answerQuestion ({ id, authedUser, answer }) {
   return {
-    type: TOGGLE_QUESTION,
+    type: ANSWER_QUESTION,
     id,
     authedUser,
-    hasLiked
+    answer
   }
 }
 
-export function handleToggleQuestion (info) {
-  return (dispatch) => {
-    dispatch(toggleQuestion(info))
+export function handleAnswerQuestion(qid, answer) {
+  return (dispatch, getState) => {
+        const { authedUser } = getState()
 
-    
-  }
+        dispatch(showLoading())
+
+        return _saveQuestionAnswer({
+            authedUser,
+            qid,
+            answer
+        })
+            .then((question) => {
+                dispatch(answerQuestion( qid, authedUser, answer ))
+                dispatch(saveUserAnswer(authedUser, qid, answer))
+            })
+            .then(() => dispatch(hideLoading()))
+
+    }
+
 }

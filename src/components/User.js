@@ -24,10 +24,11 @@ class User extends Component {
         <img
           src={avatarURL}
           className='avatar'
+          alt='{name}'
         />
         <div className='question-info'>
           <div>
-            <span>{user.name}</span>
+            <span>{name}</span>
             <p></p>
           </div>
           <div>{}</div>

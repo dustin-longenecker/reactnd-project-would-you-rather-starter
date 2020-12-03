@@ -1,0 +1,19 @@
+DONE
+
+Answered / Unanswered Questions 
+  DISPLAY
+  Functionality
+
+
+TODOS
+
+Login
+  Display
+  Functionality
+
+View Poll
+  Question + Options
+  Submit / Store Functionality
+
+  Question + Options
+  % / #ofVotes Functionality

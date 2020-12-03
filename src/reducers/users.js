@@ -1,4 +1,5 @@
-import { RECEIVE_USERS } from '../actions/users'
+import { RECEIVE_USERS, ADD_USER_QUESTION, SAVE_USER_ANSWER } from '../actions/users'
+
 
 export default function users (state = {}, action) {
   switch(action.type) {
@@ -7,6 +8,25 @@ export default function users (state = {}, action) {
         ...state,
         ...action.users
       }
+    case ADD_USER_QUESTION :
+      return {
+          ...state,
+          [action.authedUser]: {
+              ...state[action.authedUser],
+              questions: state[action.authedUser].questions.concat([action.qid]),
+          },
+      };
+      case SAVE_USER_ANSWER :
+          return {
+                ...state,
+                [action.auth]: {
+                    ...state[action.auth],
+                    answers: {
+                        ...state[action.auth].answers,
+                        [action.qid]: action.option,
+                    },
+                },
+            }
     default :
       return state
   }
