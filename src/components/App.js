@@ -17,12 +17,14 @@ class App extends Component {
     this.props.dispatch(handleInitialData())
   }
   render() {
+    const {authedUser} = this.props
+    console.log(authedUser)
     return (
       <Router>
         <Fragment>
           <LoadingBar />
           <div className='container'>
-            <Nav />
+            <Nav authedUser={authedUser} />
             {this.props.loading === true
               ? null
               : <div>
@@ -44,6 +46,7 @@ class App extends Component {
 
 function mapStateToProps ({ authedUser }) {
   return {
+    authedUser,
     loading: authedUser === null
   }
 }

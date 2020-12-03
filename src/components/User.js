@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 class User extends Component {
   
@@ -20,7 +20,7 @@ class User extends Component {
     
       
     return (
-      <Link to={``} className='question'>
+      <div>
         <img
           src={avatarURL}
           className='avatar'
@@ -41,7 +41,7 @@ class User extends Component {
             Total Score: {questions.length + Object.keys(answers).length}
           </div>
         </div>
-      </Link>
+      </div>
     )
   }
 }

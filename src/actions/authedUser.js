@@ -7,3 +7,8 @@ export function setAuthedUser (id) {
     id,
   }
 }
+export function removeAuthedUser () {
+  return {
+    type: DELETE_AUTHED_USER,
+  }
+}
