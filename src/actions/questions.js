@@ -38,10 +38,13 @@ export function receiveQuestions (questions) {
   }
 }
 
-function answerQuestion ({ id, authedUser, answer }) {
+function answerQuestion ({ qid, authedUser, answer }) {
+    console.log(qid, authedUser, answer)
+
   return {
+
     type: ANSWER_QUESTION,
-    id,
+    qid,
     authedUser,
     answer
   }
@@ -50,7 +53,6 @@ function answerQuestion ({ id, authedUser, answer }) {
 export function handleAnswerQuestion(qid, answer) {
   return (dispatch, getState) => {
         const { authedUser } = getState()
-
         dispatch(showLoading())
 
         return _saveQuestionAnswer({
@@ -59,7 +61,9 @@ export function handleAnswerQuestion(qid, answer) {
             answer
         })
             .then((question) => {
-                dispatch(answerQuestion( qid, authedUser, answer ))
+          console.log(qid, authedUser, answer)
+
+                dispatch(answerQuestion({ qid, authedUser, answer }))
                 dispatch(saveUserAnswer(authedUser, qid, answer))
             })
             .then(() => dispatch(hideLoading()))

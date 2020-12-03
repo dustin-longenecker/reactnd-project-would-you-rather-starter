@@ -23,10 +23,10 @@ class QuestionPage extends Component {
   handleSubmit = (e) => {
     e.preventDefault()
     console.log(e)
-    const { dispatch,  id } = this.props
+    const { dispatch, question } = this.props
     console.log(this.state.selectedOption)
     const selectedOption = this.state.selectedOption
-    dispatch(handleAnswerQuestion(id, selectedOption))
+    dispatch(handleAnswerQuestion(question.id, selectedOption))
 
     
   }
