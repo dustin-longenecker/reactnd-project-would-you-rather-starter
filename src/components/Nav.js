@@ -25,25 +25,23 @@ class Nav extends Component  {
           </NavLink>
         </li>
         <li>
-          <NavLink to='/new' activeClassName='active'>
+          <NavLink to='/new' exact activeClassName='active'>
             New Question
           </NavLink>
         </li>
          <li>
-          <NavLink to='/leaderboard' activeClassName='active'>
+          <NavLink to='/leaderboard' exact activeClassName='active'>
             Leaderboard
           </NavLink>
         </li>
-        <li>
-
-
+        <li className="right">
           <div>
-          <button onClick={this.onLogout} activeClassName='active'>
+          <button onClick={this.onLogout} >
             Logout
           </button>
-          {authedUser}
           </div>
         </li>
+        <li className="right">{authedUser}</li>
 
       </ul>
 

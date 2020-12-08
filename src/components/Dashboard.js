@@ -5,7 +5,9 @@ import Question from './Question'
 
 class Dashboard extends Component {
   state = {
-    showAnswered: false
+    showAnswered: false,
+    answered: [],
+    unanswered: []
   }
   toggleQuestions = (e) => {
     e.preventDefault()
