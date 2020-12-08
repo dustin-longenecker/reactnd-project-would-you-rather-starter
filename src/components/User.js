@@ -16,7 +16,6 @@ class User extends Component {
     const {
          name, answers, questions,  avatarURL
     } = user
-    console.log(user)
     
       
     return (
@@ -31,7 +30,6 @@ class User extends Component {
             <span>{name}</span>
             <p></p>
           </div>
-          <div>{}</div>
           <div className='user-scores'>
             <div>Created Questions: {questions.length}</div>
             <div>Answered Questions: {Object.keys(answers).length}</div>

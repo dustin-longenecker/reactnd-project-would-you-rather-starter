@@ -11,42 +11,40 @@ class Dashboard extends Component {
   }
   toggleQuestions = (e) => {
     e.preventDefault()
-    const changeDisplay = !this.state.showAnswered
     this.setState({
-      showAnswered: changeDisplay
+      showAnswered: !this.state.showAnswered
     })
   }
 
-  filterAnsweredQuestions = (questions, authedUser) => {
-    let filtered = []
-    const { questionIds } = this.props
-    for (let i = 0; i < questionIds.length; i++) {
-      let key = questionIds[i]
-      if (questions[key].optionOne.votes.includes(authedUser) || questions[key].optionTwo.votes.includes(authedUser)) {
-        filtered.push(questions[key].id)
+  
+
+  filterQuestions = (questions, authedUser) => {
+    let unanswered = []
+    let answered = []
+    
+    for(let qid in questions){
+      let qOne = questions[qid][1].optionOne.votes.includes(authedUser)
+      let qTwo = questions[qid][1].optionTwo.votes.includes(authedUser)
+      if(!qOne && !qTwo){
+        unanswered.push(questions[qid][1].id)
+      }else if (qOne || qTwo){
+        answered.push(questions[qid][1].id)
+        
       }
     }
-    return filtered
-
-  }
-
-  filterUnansweredQuestions = (questions, authedUser) => {
-    let filtered = []
-    const { questionIds } = this.props
-    for (let i = 0; i < questionIds.length; i++) {
-      let key = questionIds[i]
-      if (!questions[key].optionOne.votes.includes(authedUser) && !questions[key].optionTwo.votes.includes(authedUser)) {
-        filtered.push(questions[key].id)
-      }
-    }
-    return filtered
+    return {answered, unanswered}
+    
   }
   
   render() {
     const { questions, authedUser } = this.props
-    const { showAnswered } = this.state
-    const answered = this.filterAnsweredQuestions(questions, authedUser) || []
-    const unanswered = this.filterUnansweredQuestions(questions, authedUser) || []
+    const { showAnswered, unanswered, answered} = this.state
+    let filteredQuestions = this.filterQuestions(questions, authedUser)
+    console.log(answered)
+    console.log(unanswered)
+
+    //const answered = this.filterAnsweredQuestions(questions, authedUser) || []
+    //const unanswered = this.filterUnansweredQuestions(questions, authedUser) || []
 
     return (
       <div className="center">
@@ -63,7 +61,7 @@ class Dashboard extends Component {
           <div className='answered-questions'>
             <h2 className='answered-title'>Answered Questions</h2>
             {
-              answered.map((id) => (
+              filteredQuestions.answered.map((id) => (
                   <Question
                       id={id}
                       key={id}
@@ -75,7 +73,7 @@ class Dashboard extends Component {
           <div className='unanswered-questions'>
             <h2 className='unanswered-title'>Unanswered Questions</h2>
             {
-              unanswered.map((id) => (
+              filteredQuestions.unanswered.map((id) => (
                   <Question
                       id={id}
                       key={id}
@@ -94,7 +92,7 @@ function mapStateToProps ({ questions, authedUser }) {
   return {
     questionIds: Object.keys(questions)
       .sort((a,b) => questions[b].timestamp - questions[a].timestamp),
-    questions,
+    questions: Object.entries(questions),
     authedUser
   }
 }

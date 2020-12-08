@@ -11,7 +11,7 @@ class NewQuestion extends Component {
   }
   handleChangeOptionOne = (e) => {
     const optionOneText = e.target.value
-    console.log(e.target)
+    //console.log(e.target)
 
     this.setState(() => ({
       optionOneText,
@@ -19,7 +19,7 @@ class NewQuestion extends Component {
   }
    handleChangeOptionTwo = (e) => {
     const optionTwoText = e.target.value
-    console.log(e.target)
+    //console.log(e.target)
 
     this.setState(() => ({
       optionTwoText,
