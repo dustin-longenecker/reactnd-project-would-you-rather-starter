@@ -18,30 +18,30 @@ class Nav extends Component  {
     { authedUser !== null ?
     <nav className='nav'>
 
-      <ul>
-        <li>
+      <ul className = 'nav ul'>
+        <li className = 'nav li'>
           <NavLink to='/' exact activeClassName='active'>
             Home
           </NavLink>
         </li>
-        <li>
+        <li className = 'nav li'>
           <NavLink to='/new' exact activeClassName='active'>
             New Question
           </NavLink>
         </li>
-         <li>
+         <li className = 'nav li'>
           <NavLink to='/leaderboard' exact activeClassName='active'>
             Leaderboard
           </NavLink>
         </li>
-        <li className="right">
+        <li className="right nav li">
           <div>
           <button onClick={this.onLogout} >
             Logout
           </button>
           </div>
         </li>
-        <li className="right">{authedUser}</li>
+        <li className="right nav li">{authedUser}</li>
 
       </ul>
 

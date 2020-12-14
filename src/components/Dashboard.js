@@ -6,8 +6,6 @@ import Question from './Question'
 class Dashboard extends Component {
   state = {
     showAnswered: false,
-    answered: [],
-    unanswered: []
   }
   toggleQuestions = (e) => {
     e.preventDefault()
@@ -15,36 +13,12 @@ class Dashboard extends Component {
       showAnswered: !this.state.showAnswered
     })
   }
-
-  
-
-  filterQuestions = (questions, authedUser) => {
-    let unanswered = []
-    let answered = []
-    
-    for(let qid in questions){
-      let qOne = questions[qid][1].optionOne.votes.includes(authedUser)
-      let qTwo = questions[qid][1].optionTwo.votes.includes(authedUser)
-      if(!qOne && !qTwo){
-        unanswered.push(questions[qid][1].id)
-      }else if (qOne || qTwo){
-        answered.push(questions[qid][1].id)
-        
-      }
-    }
-    return {answered, unanswered}
-    
-  }
   
   render() {
-    const { questions, authedUser } = this.props
-    const { showAnswered, unanswered, answered} = this.state
-    let filteredQuestions = this.filterQuestions(questions, authedUser)
-    console.log(answered)
-    console.log(unanswered)
+    const { questions, authedUser, answered, unanswered } = this.props
+    const { showAnswered } = this.state
+    
 
-    //const answered = this.filterAnsweredQuestions(questions, authedUser) || []
-    //const unanswered = this.filterUnansweredQuestions(questions, authedUser) || []
 
     return (
       <div className="center">
@@ -61,7 +35,7 @@ class Dashboard extends Component {
           <div className='answered-questions'>
             <h2 className='answered-title'>Answered Questions</h2>
             {
-              filteredQuestions.answered.map((id) => (
+              answered.map((id) => (
                   <Question
                       id={id}
                       key={id}
@@ -73,7 +47,7 @@ class Dashboard extends Component {
           <div className='unanswered-questions'>
             <h2 className='unanswered-title'>Unanswered Questions</h2>
             {
-              filteredQuestions.unanswered.map((id) => (
+              unanswered.map((id) => (
                   <Question
                       id={id}
                       key={id}
@@ -88,12 +62,26 @@ class Dashboard extends Component {
   }
 }
 
-function mapStateToProps ({ questions, authedUser }) {
+function mapStateToProps ({users, questions, authedUser }) {
+  let qKeys = Object.keys(questions)
+  let aKeys = Object.keys(users[authedUser].answers)
+  console.log(qKeys)
+  console.log(aKeys)
+
+    let answered = qKeys.filter(f => aKeys.includes(f)) 
+    let unanswered = qKeys.filter(f => !aKeys.includes(f))
+    
+
+  console.log("answered", answered)
+  console.log("unanswered", unanswered)
+  
   return {
     questionIds: Object.keys(questions)
       .sort((a,b) => questions[b].timestamp - questions[a].timestamp),
-    questions: Object.entries(questions),
-    authedUser
+    questions,
+    authedUser,
+    answered,
+    unanswered
   }
 }
 

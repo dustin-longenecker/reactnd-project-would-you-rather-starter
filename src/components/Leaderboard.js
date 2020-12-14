@@ -5,12 +5,11 @@ import User from './User'
 
 class Leaderboard extends Component {
 
-
   render() {
     return (
-      <div>
+      <div className='container'>
         <h3 className='center'>Leaderboard</h3>
-        <ul className='dashboard-list'>
+        <ul className='center'>
         
           {this.props.usersIds.map((id) => (
             <li key={id}>
@@ -24,13 +23,12 @@ class Leaderboard extends Component {
 }
 
 function mapStateToProps ({ users }) {
-  console.log(Object.keys(users))
-  console.log(Object.keys(users))
   
   return {
     usersIds: Object.keys(users)
-      .sort((a,b) => (users[b].questions.length + Object.keys(users[b].answers).length) - (users[a].questions.length + Object.keys(users[a].answers).length))
+     .sort((a,b) => (users[b].questions.length + Object.keys(users[b].answers).length) - (users[a].questions.length + Object.keys(users[a].answers).length))
   }
+
 }
 
 export default connect(mapStateToProps)(Leaderboard)

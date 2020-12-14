@@ -8,13 +8,13 @@ class User extends Component {
   
 
   render() {
-    const { user } = this.props
+    const { user, totalAs, totalQs} = this.props
     if( user === null) {
         return <p>This User doesnt exist.</p>
     }
 
     const {
-         name, answers, questions,  avatarURL
+         name, avatarURL
     } = user
     
       
@@ -31,12 +31,12 @@ class User extends Component {
             <p></p>
           </div>
           <div className='user-scores'>
-            <div>Created Questions: {questions.length}</div>
-            <div>Answered Questions: {Object.keys(answers).length}</div>
+            <div>Created Questions: {totalQs}</div>
+            <div>Answered Questions: {totalAs}</div>
 
           </div>
           <div className='total-score'>
-            Total Score: {questions.length + Object.keys(answers).length}
+            Total Score: {totalAs + totalQs}
           </div>
         </div>
       </div>
@@ -45,8 +45,13 @@ class User extends Component {
 }
 
 function mapStateToProps ({authedUser, users}, { id }) {
+  console.log(id)
+  console.log(users)
+
   const user = users[id]
   return {
+    totalQs: user.questions.length,
+    totalAs: Object.keys(user.answers).length,
     authedUser,
     users,
     user: user

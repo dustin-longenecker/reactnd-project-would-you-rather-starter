@@ -4,11 +4,6 @@ import {  formatDate } from '../utils/_DATA'
 import { Link, withRouter } from 'react-router-dom'
 
 class Question extends Component {
-  
- 
-  
-  
-
   render() {
     const { question, avatarURL } = this.props
     if (question === null) {
@@ -35,6 +30,7 @@ class Question extends Component {
           <div className='question-options center'>
           <h3>Would you rather? </h3>
               <p>{optionOne.text}</p>
+              <p>OR</p>
               <p>{optionTwo.text}</p>
           </div>
         </div>

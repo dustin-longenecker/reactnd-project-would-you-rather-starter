@@ -11,7 +11,6 @@ class NewQuestion extends Component {
   }
   handleChangeOptionOne = (e) => {
     const optionOneText = e.target.value
-    //console.log(e.target)
 
     this.setState(() => ({
       optionOneText,
@@ -19,7 +18,6 @@ class NewQuestion extends Component {
   }
    handleChangeOptionTwo = (e) => {
     const optionTwoText = e.target.value
-    //console.log(e.target)
 
     this.setState(() => ({
       optionTwoText,
@@ -32,7 +30,6 @@ class NewQuestion extends Component {
     const { dispatch, id } = this.props
 
     dispatch(handleAddQuestion(optionOneText, optionTwoText))
-    console.log("opt101", optionOneText)
     this.setState(() => ({
       optionOneText: '',
       optionTwoText: '',
@@ -48,7 +45,7 @@ class NewQuestion extends Component {
 
 
     return (
-      <div>
+      <div className='question'>
         <h3 className='center'>Compose new Question</h3>
         <form className='new-question' onSubmit={this.handleSubmit}>
         <h4>Complete a new question: </h4>
@@ -57,6 +54,7 @@ class NewQuestion extends Component {
             value={optionOneText}
             onChange={this.handleChangeOptionOne}
             maxLength={280}
+            className='textarea'
           />
           <span>OR . . . </span>
           <input
@@ -64,6 +62,8 @@ class NewQuestion extends Component {
             value={optionTwoText}
             onChange={this.handleChangeOptionTwo}
             maxLength={280}
+            className='textarea'
+
           />
           
           <button
